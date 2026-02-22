@@ -27,7 +27,7 @@ Vid_Txt_Draw_HLine PROC
     ; 2. Calculate Start Offset (Y * 160) + (X * 2)
     MOV AL, DH
     MOV AH, 160
-    MOV AH                      ; AX = Y * 160
+    MUL AH                      ; AX = Y * 160
 
     XOR DH, DH
     MOV DI, DX
@@ -123,11 +123,14 @@ Vid_Txt_Draw_Rect PROC
     MOV CL, CH               ; Move Height into CL for VLine
     XOR CH, CH
     CALL Vid_Txt_Draw_VLine
-    
+
+    POP CX
+    POP DX 
     ; Safely POP the stack
     POP DX                      
     POP CX                      
     POP AX                             
+    RET
 Vid_Txt_Draw_Rect ENDP
 
 ; --- DRAW BOX (Filled) ---
