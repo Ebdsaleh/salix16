@@ -124,12 +124,10 @@ Vid_Txt_Draw_Rect PROC
     XOR CH, CH
     CALL Vid_Txt_Draw_VLine
     
-    POP CX
-    POP DX
-    ; Check if below popping is hazardous...
-    POP DX                      ; problem?
-    POP CX                      ; problem?
-    POP AX                      ; <--- should be ok       
+    ; Safely POP the stack
+    POP DX                      
+    POP CX                      
+    POP AX                             
 Vid_Txt_Draw_Rect ENDP
 
 ; --- DRAW BOX (Filled) ---
