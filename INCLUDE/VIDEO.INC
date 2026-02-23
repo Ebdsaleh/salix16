@@ -12,5 +12,6 @@ EXTRN Vid_Txt_Draw_HLine:PROC
 EXTRN Vid_Txt_Draw_VLine:PROC
 EXTRN Vid_Txt_Draw_Rect:PROC
 EXTRN Vid_Txt_Draw_Box:PROC
+EXTRN Vid_Txt_Draw_Border:PROC
 EXTRN Vid_Txt_Draw_Panel:PROC
 ;--------------------------------
