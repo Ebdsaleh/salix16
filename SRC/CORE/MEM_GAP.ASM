@@ -1,10 +1,10 @@
 ; SRC\CORE\MEM_GAP.ASM
 ; --- Salix16 Memory Gap Module ---
 TITLE SALIX_MEM_GAP
-INCLUDE DEFS.INC
 
 .MODEL SMALL
-.STACK 100H
+
+INCLUDE DEFS.INC
 
 PUBLIC Gap_Init
 PUBLIC Gap_Move_Left
@@ -108,9 +108,9 @@ Gap_Move_Left ENDP
 
 ; Moves the cursor one character to the Right
 Gap_Move_Right PROC
-    MOV PUSH AX
-    MOV PUSH SI
-    MOV PUSH DI
+    PUSH AX
+    PUSH SI
+    PUSH DI
 
     ; 1. Can we move right? (Is Gap_end < Buf_End?)
     MOV AX, Gap_End

@@ -1,11 +1,10 @@
 ; SRC\INPUT\KBD_HW.ASM
 ; --- Salix16 KEYBOARD DIRECT-TO-HARDWARE MODULE ---
 TITLE SALIX_KBD_HW
-INCLUDE DEFS.INC
 
 .MODEL SMALL
-.386
-.STACK 100H                     ; Allow 32-bit registers for speed
+
+INCLUDE DEFS.INC
 
 .DATA
     ; --- The "Vault" for the original BIOS pointers ---
@@ -17,6 +16,7 @@ INCLUDE DEFS.INC
     Salix_Raw_ScanCode  DB 0    ; This is our "DNA" storage for the last key
 
 .CODE
+.386                            ; Allow 32-bit registers for speed
 ; Use 16-bit registers (AX instead of EAX) for total TASM 1.0 safety
 PUBLIC Kbd_ISR_Install
 PUBLIC Kbd_ISR_Remove

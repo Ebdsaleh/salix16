@@ -1,10 +1,10 @@
 ; SRC\VIDEO\VID_TEXT.ASM
 ; --- Salix16 VIDEO TEXT MODULE ---
 TITLE SALIX_VID_TEXT
-INCLUDE DEFS.INC
 
 .MODEL SMALL
-.STACK 100H
+
+INCLUDE DEFS.INC
 
 .CODE
 PUBLIC Vid_Txt_Set_Mode
@@ -81,7 +81,7 @@ String_Loop:
     JE  Write_Done
 
     MOV AH, BL                  ; Set the attribute from our register
-    STOW                        ; Store har and Attr to [ES:DI], INC DI by 2
+    STOSW                        ; Store har and Attr to [ES:DI], INC DI by 2
     JMP String_Loop
 
 Write_Done:

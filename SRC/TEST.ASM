@@ -1,8 +1,9 @@
 ; SRC\TEST.ASM
 TITLE SALIX_TEST
-INCLUDE DEFS.INC
+
 .MODEL SMALL
-.STACK 100H
+
+INCLUDE DEFS.INC
 
 ; Tell TASM these are in the library
 EXTRN Vid_Txt_Set_Mode:PROC

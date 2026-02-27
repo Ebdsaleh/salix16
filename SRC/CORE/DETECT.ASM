@@ -2,9 +2,10 @@
 ; --- Salix16 DETECT Module ---
 
 TITLE SALIX_DETECT
-INCLUDE DEFS.INC
+
 .MODEL SMALL
-.STACK 100H
+
+INCLUDE DEFS.INC
 
 .CODE
 PUBLIC Get_CPU_Type
@@ -24,7 +25,7 @@ Get_CPU_Type PROC
     JE Is_8086
 
     ; 2. Check for 286 (Bits 12-15 are always 0 in real mode)
-    MOV AX. 0F000H
+    MOV AX, 0F000H
     PUSH AX
     POPF                        ; Try to set bits 12-15
     PUSHF
