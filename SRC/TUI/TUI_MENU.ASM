@@ -6,9 +6,8 @@ TITLE SALIX_TUI_MENU
 
 INCLUDE DEFS.INC
 
-PUBLIC Tui_Menu_Draw_Bar
-
 .CODE
+PUBLIC Tui_Menu_Draw_Bar
 EXTRN Vid_Txt_Write_String
 
 ; ------------------------------------------------------

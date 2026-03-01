@@ -4,12 +4,12 @@
 EXTRN Get_CPU_Type
 ;  --
 ;  -- Memory Gap Management  --
-EXTRN Gap_Init:PROC
-EXTRN Gap_Move_Left:PROC
-EXTRN Gap_Move_Right:PROC
-EXTRN Gap_Move_Up:PROC
-EXTRN Gap_Move_Down:PROC
-EXTRN Gap_Insert_Char:PROC
-EXTRN Find_Line_Start:PROC
+EXTRN Gap_Init:NEAR
+EXTRN Gap_Move_Left:NEAR
+EXTRN Gap_Move_Right:NEAR
+EXTRN Gap_Move_Up:NEAR
+EXTRN Gap_Move_Down:NEAR
+EXTRN Gap_Insert_Char:NEAR
+EXTRN Find_Line_Start:NEAR
 ;  --                        --
 ;------------------------------

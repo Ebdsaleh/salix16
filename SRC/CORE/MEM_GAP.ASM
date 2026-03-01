@@ -6,6 +6,23 @@ TITLE SALIX_MEM_GAP
 
 INCLUDE DEFS.INC
 
+.DATA
+    ; 1. The Physical Storage (16,384 bytes of zeros)
+    ; This is the "Warehouse" for the text.
+    Raw_Buffer  DB  16384 DUP(0)
+
+    ; 2. These are the 4 Pillars (Pointers) of the Gap Buffer
+    ; Declare
+    PUBLIC Buf_Start
+    Buf_Start    DW 0
+    PUBLIC Gap_Start
+    Gap_Start    DW 0
+    PUBLIC Gap_End
+    Gap_End      DW 0
+    PUBLIC Buf_End
+    Buf_End      DW 0
+
+.CODE
 PUBLIC Gap_Init
 PUBLIC Gap_Move_Left
 PUBLIC Gap_Move_Right
@@ -14,22 +31,9 @@ PUBLIC Gap_Move_Down
 PUBLIC Gap_Insert_Char
 PUBLIC Find_Line_Start
 
-.DATA
-    ; 1. The Physical Storage (16,384 bytes of zeros)
-    ; This is the "Warehouse" for the text.
-    Raw_Buffer  DB  16384 DUP(0)
-
-    ; 2. These are the 4 Pillars (Pointers) of the Gap Buffer
-    ; Declare
-    PUBLIC Buf_Start    DW 0
-    PUBLIC Gap_Start    DW 0
-    PUBLIC Gap_End      DW 0
-    PUBLIC Buf_End      DW 0
-
-.CODE
 ; Initializes a 16KB buffer for our editor
 ; Using a static block for simplicity in TASM 1.0
-Gap_Init PROC
+Gap_Init PROC NEAR
     ; Set Buf_Start to the beginning of our Raw_Buffer
     MOV AX, OFFSET Raw_Buffer
     MOV Buf_Start, AX
@@ -48,7 +52,7 @@ Gap_Init ENDP
 
 ; --- HELPER: Find Start of the Current Line ---
 ; Returns Offset in BX
-Find_Line_Start PROC
+Find_Line_Start PROC NEAR
     MOV BX, Gap_Start
     DEC BX                      ; Start look before the Gap
 
@@ -72,7 +76,7 @@ Found_Line:
 Find_Line_Start ENDP
 
 ; Moves the cursor one character to the Left
-Gap_Move_Left PROC
+Gap_Move_Left PROC NEAR
     PUSH AX
     PUSH SI
     PUSH DI
@@ -107,7 +111,7 @@ Move_Left_Done:
 Gap_Move_Left ENDP
 
 ; Moves the cursor one character to the Right
-Gap_Move_Right PROC
+Gap_Move_Right PROC NEAR
     PUSH AX
     PUSH SI
     PUSH DI
@@ -135,7 +139,7 @@ Move_Right_Done:
 Gap_Move_Right ENDP
 
 ; --- GAP MOVE UP ---
-Gap_Move_Up PROC
+Gap_Move_Up PROC NEAR
     CALL Find_Line_Start
     
     ; If BX == Buf_Start, we can't move up
@@ -149,7 +153,7 @@ Move_Up_Done:
 Gap_Move_Up ENDP
 
 ; --- GAP MOVE DOWN ---
-Gap_Move_Down PROC
+Gap_Move_Down PROC NEAR
     MOV BX, Gap_End
 
 Down_Loop:
@@ -176,41 +180,41 @@ Gap_Move_Down ENDP
 ; This is where  we shuffle memory if the user moves the cursor
 ; We'll write the "Block Move" logic next
 
-Gap_Move_Cursor PROC
+Gap_Move_Cursor PROC NEAR
     CMP Bx, 1
-    JE  Move_Left
+    JE  Do_Move_Left
     
     CMP BX, 2
-    JE  Move_Right
+    JE  Do_Move_Right
     
     CMP BX, 3
-    JE  Move_Up
+    JE  Do_Move_Up
     
     CMP BX, 4
-    JE  Move_Down
+    JE  Do_Move_Down
     
     RET
 
-Move_Left:
+Do_Move_Left:
     CALL Gap_Move_Left
     RET
 
-Move_Right:
+Do_Move_Right:
     CALL Gap_Move_Right
     RET
 
-Move_Up:
+Do_Move_Up:
     CALL Gap_Move_Up
     RET
 
-Move_Down:
+Do_Move_Down:
     CALL Gap_Move_Down
     RET
 Gap_Move_Cursor ENDP
 
 ; Inserts a character into the Gap
 ; AL = Character to insert
-Gap_Insert_Char PROC
+Gap_Insert_Char PROC NEAR
     PUSH BX
     PUSH DI
 

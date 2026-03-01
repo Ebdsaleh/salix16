@@ -8,7 +8,9 @@ INCLUDE DEFS.INC
 
 .DATA
     ; --- The "Vault" for the original BIOS pointers ---
+    PUBLIC Old_Int09_Offset
     Old_Int09_Offset    DW 0    ; To store the BIOS address
+    PUBLIC Old_Int09_Segment
     Old_Int09_Segment   DW 0    ; So we can restore is later
 
     ; --- The "DNA" of the current keypress

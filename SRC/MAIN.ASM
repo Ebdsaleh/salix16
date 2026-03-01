@@ -2,17 +2,21 @@
 TITLE SALIX_MAIN
  
 .MODEL SMALL
+.STACK 100H
 
 INCLUDE SALIX.INC
 
+.DATA
+EXTRN Salix_Raw_ScanCode:BYTE
+
+.CODE
 ; External Routines (The "Handshake")
 EXTRN Get_CPU_Type:PROC
 EXTRN Vid_Txt_Set_Mode:PROC
 EXTRN Vid_Txt_Clear_Screen:PROC
 EXTRN Vid_Txt_Write_Char:PROC
 
-.CODE
-Main PROC
+Main PROC NEAR
     ; 1. Standard Startup
     MOV AX, @DATA
     MOV DS, AX

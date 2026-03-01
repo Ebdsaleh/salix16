@@ -2,21 +2,23 @@
 TITLE SALIX_TEST
 
 .MODEL SMALL
-
+.STACK 100H
 INCLUDE DEFS.INC
 
-; Tell TASM these are in the library
-EXTRN Vid_Txt_Set_Mode:PROC
-EXTRN Vid_Txt_Write_Char
-EXTRN Kbd_ISR_Install:PROC
-EXTRN Kbd_ISR_Remove:PROC
 
 ; Declare the variables we want to look at
 .DATA
     EXTRN Salix_Raw_ScanCode:BYTE
 
 .CODE
-Main:
+
+; Tell TASM these are in the library
+EXTRN Vid_Txt_Set_Mode:PROC
+EXTRN Vid_Txt_Write_Char:PROC
+EXTRN Kbd_ISR_Install:PROC
+EXTRN Kbd_ISR_Remove:PROC
+
+Main Proc Near
     ; 1. Setup the Environment
     CALL Vid_Txt_Set_Mode
     CALL Kbd_ISR_Install        ; IGNITE THE KEYBOARD
@@ -45,5 +47,7 @@ WaitForKey:
 
     MOV AX, 4C00H               ; Return to DOS
     INT 21H
+
+Main ENDP
 
 END Main
