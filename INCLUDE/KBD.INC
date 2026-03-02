@@ -4,7 +4,7 @@ EXTRN Kbd_ISR_Install:NEAR
 EXTRN Kbd_ISR_Remove:NEAR
 EXTRN Kbd_Get_Key:NEAR
 EXTRN Kbd_Get_ScanCode:NEAR
-EXTRN Kbd_Await_Keystroke
+EXTRN Kbd_Await_Keystroke:NEAR
 
 ; --- Data Exports ---
 EXTRN Salix_Raw_ScanCode:BYTE
