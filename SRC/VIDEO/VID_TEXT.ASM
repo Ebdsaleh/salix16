@@ -36,7 +36,7 @@ Vid_Txt_Write_Char PROC
     MOV CL, 160                 ; Each row is 160 bytes
     MUL CL                      ; AX = Y 160
 
-    XOR DH, DH                  ; Clear high Byte of X
+    MOV DH, 0                   ; Clear high Byte of X
     SHL DX, 1                   ; DX = X * 2
     ADD AX, DX                  ; AX = Total Offset
     MOV DI, AX                  ; DI is our pointer into Video RAM
@@ -102,7 +102,7 @@ Vid_Txt_Clear_Screen PROC
 
     MOV AX, 0B800H
     MOV ES, AX                  ; Point ot Video RAM
-    XOR DI, DI                  ; Start at the top-Left
+    MOV DI, 0                   ; Start at the top-Left
 
     MOV AX, 0720H               ; 07 = Attribute, 20 = Space
     MOV CX, 2000                ; 80 * 25 = 2000 cells
