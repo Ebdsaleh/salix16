@@ -136,13 +136,13 @@ Vid_Txt_Draw_VLine ENDP
 ; --- DRAW RECTANGLE (Hollow) ---
 ; DL=X. DH=Y, CL=Width, CH=Height, AL=Char, BL=Attr
 Vid_Txt_Draw_Rect PROC
-    PUSH AX
-    PUSH CX
     PUSH DX
+    PUSH CX
+    PUSH AX
 
     ; 1. Top Line
     PUSH CX
-    XOR CH, CH                  ; Use only Width for HLine
+    MOV CH, 0                   ; Use only Width for HLine
     CALL Vid_Txt_Draw_HLine
     POP CX
 
@@ -151,7 +151,7 @@ Vid_Txt_Draw_Rect PROC
     ADD DH, CH                  ; Move Y down by Height
     DEC DH                      ; Adjust for 0-Index
     PUSH CX
-    XOR CH, CH
+    MOV CH, 0
     CALL Vid_Txt_Draw_HLine
     POP CX
     POP DX
@@ -167,18 +167,14 @@ Vid_Txt_Draw_Rect PROC
     PUSH DX
     ADD DL, CL                  ; Move X Right by Width
     DEC DL                      ; Adjust for 0-index
-    
-    PUSH CX
     MOV CL, CH               ; Move Height into CL for VLine
-    XOR CH, CH
     CALL Vid_Txt_Draw_VLine
 
-    POP CX
     POP DX 
     ; Safely POP the stack
-    POP DX                      
+    POP AX                      
     POP CX                      
-    POP AX                             
+    POP DX                             
     RET
 Vid_Txt_Draw_Rect ENDP
 
