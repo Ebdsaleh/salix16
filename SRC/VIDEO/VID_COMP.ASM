@@ -177,15 +177,12 @@ Skip_BTM_H:
     ; --- PHASE 3: VERTICAL WALLS ---
     ; --- DRAW LEFT PILLAR ---
     PUSH DX                     ; Save original X,Y
-
     INC DH                      ; Start 1 row BELOW TL Corner
-    SUB CH, 2                   ; Trim Height by 2 so it doesn't overwrite the BL Corner
     MOV AL, CH                  ; Get Height
-    DEC AL                      ; Length = Height - 1 (stops before BL Corner)
-
+    SUB AL, 1                   ; Trim Height by 1 so it doesn't overwrite the BL Corner
     JZ Skip_Left_V              ; If Height was 1, no gap to fill (doesn't really get called due to the clamping)
 
-    MOV AH, AL                  ; Pillar Height
+    MOV CH, AL                  ; Pillar Height
     MOV AL, [SI+5]              ; Get vertical char
     CALL Vid_Txt_Draw_VLine     ; Draw the left pillar
 
