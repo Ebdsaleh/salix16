@@ -247,6 +247,7 @@ Vid_Txt_Draw_Panel PROC NEAR
     
     ; 2. Check Style for Borders
     CMP BH, 0                   ; Style 0 = Borderless Panel 
+    JE Panel_Done
     ;-------------------------NOTE-----------------------
     ; Don't need explict BH 1 comparison because it will;
     ; fall through to it if not 0 or 2                  ;
