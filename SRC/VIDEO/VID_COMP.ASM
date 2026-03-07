@@ -229,9 +229,9 @@ Vid_Txt_Draw_Border ENDP
 
 
 ; --- VID_TXT_DRAW_PANEL ---
-; DL=X, DH=Y, CL=W, BL=Attr, BH=Style
+; DL=X, DH=Y, CL=W, CH=H BL=Attr, BH=Style
 ; Style: 0=None, 1=Single, 2=Double
-Vid_Txt_Draw_Panel PROC
+Vid_Txt_Draw_Panel PROC NEAR
     PUSH AX
     PUSH BX
     PUSH CX
@@ -240,28 +240,31 @@ Vid_Txt_Draw_Panel PROC
 
 
     ; 1. Draw the Background (The "Floor")
-    PUSH CX                     ; Save original Width/Height
+
     PUSH DX                     ; Save original X/Y
-    PUSH AX
+    PUSH CX                     ; Save original Width/Height
     MOV AL, ' '                 ; Fill with Space
     CALL Vid_Txt_Draw_Box
-
-    POP DX                      ; Restore X/Y for the border logic
     POP CX                      ; Restore W/H for the border logic
-
+    POP DX                      ; Restore X/Y for the border logic
+    
     ; 2. Check Style for Borders
-    CMP BH, 1
-    JE Style_1             ; Single Border
+    CMP BH, 0                   ; Style 0 = Borderless Panel 
+    ;-------------------------NOTE-----------------------
+    ; Don't need explict BH 1 comparison because it will;
+    ; fall through to it if not 0 or 2                  ;
+    ; CMP BH, 1                                         ;
+    ; JE Style_1             ; Single Border            ;
+    ;----------------------------------------------------
     CMP BH, 2
     JE Style_2             ; Double Border
 
 Style_1:
     ; Use Single Line Chars (0DAH, 0BFH, 0C0H, 0D9H, 0C4H, 0B3H)
-    ; For Brevity, we'll call our Rect routine with the 'H' line Character
-    ; MOV AL, 0C4H                ; '-'
     LEA SI, Set_Single          ; Point SI to the Single-Line DNA 
     CALL Vid_Txt_Draw_Border
     JMP Panel_Done
+
 Style_2:
     ; Use Double Line Chars (0C9H, 0BBH, 0C8H, 0CDH, 0BAH)
     ;MOV AL, 0CDH                ; '='
