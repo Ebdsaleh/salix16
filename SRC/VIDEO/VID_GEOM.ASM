@@ -202,7 +202,7 @@ Vid_Txt_Draw_Rect PROC
 Vid_Txt_Draw_Rect ENDP
 
 ; --- DRAW BOX (Filled) ---
-; DL=x, DH=Y, CL=Width, AL=Char, BL=Attr
+; DL=x, DH=Y, CL=Width, CH=Height AL=Char, BL=Attr
 Vid_Txt_Draw_Box PROC
     PUSH DX                     ; Save original X/Y
     PUSH CX                     ; Save original W/H
