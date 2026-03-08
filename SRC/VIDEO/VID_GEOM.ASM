@@ -211,13 +211,14 @@ Vid_Txt_Draw_Box PROC
 Row_Loop:
     PUSH DX                     ; Save current X/Y
     PUSH CX                     ; Save current Height counter
-
+    PUSH AX
     ; --- Draw one Horizontal Line ---
     ; We need to move the width into CX for the HLine call
     MOV CH, 0                   ; Make CX purely the Width (CL)
     CALL Vid_Txt_Draw_HLine
 
     ; --- Restore state for the next iteration ---
+    POP AX
     POP CX                      ; Restore W/H
     POP DX                      ; Restore X/Y
 
