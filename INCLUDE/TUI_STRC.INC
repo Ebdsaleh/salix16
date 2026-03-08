@@ -17,3 +17,10 @@ Tui_Menu_Bar STRUC
     MB_ColorHigh        DB ?    ; Active color (OFH - White on Black)
     MB_SlotTable        DW ?    ; Pointer to an array of the Tui_Menu_Slot offsets
 Tui_Menu_Bar ENDS
+
+; --- Status Bar Constants ---
+STATUS_BAR_X      EQU 00h    ; Far left (0)
+STATUS_BAR_Y      EQU 18h    ; Bottom row (24 in Decimal)
+STATUS_BAR_W      EQU 50h    ; Full Width (80 in Decimal)
+STATUS_BAR_H      EQU 01h    ; Just one row high
+STATUS_BAR_COLOR  EQU 70h    ; Black text on Gray background
