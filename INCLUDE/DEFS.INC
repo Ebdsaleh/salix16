@@ -2,6 +2,8 @@
 ; --- Salix 16 Master Architecture Definitions
 ; -------------------------------------------- 
 
+INCLUDE KEYS.INC
+
 ; CPU Types
 CPU_8086        EQU 0
 CPU_286         EQU 1
@@ -44,3 +46,24 @@ RED             EQU 12
 MAGENTA         EQU 13
 YELLOW          EQU 14
 WHITE           EQU 15
+
+
+; --- Salix16 Constants ---
+KEY_STATE_UP    EQU 0
+KEY_STATE_DOWN  EQU 1
+
+; --- Salix16 Keyboard Signal Spec ---
+KeySignal STRUC
+    ; The Manifest: Allows 16-bit PUSH/POP or MOV of the first two fields
+    Manifest    DB 6 DUP(0) ; 6 bytes, holds all attributes, useful for validation and storing.
+    ; We use ORG to "reset" the pointer to the start of the manifest
+    ORG 0       
+
+    ; Individual Attributes
+    Scan_code   DB 0        ; Physical ID (Offset 0 in Manifest)
+    State       DB 0        ; Press/Release (Offset 1 in Manifest)
+    Char_Lo     DB 0        ; Normal ASCII
+    Char_Hi     DB 0        ; Shifted ASCII
+    Is_Modifier DB 0        ; 1 = Modifier, 0 = Content
+    Padding     DB 0        ; Pads to 6 bytes (3 Words) for CPU alignment
+KeySignal ENDS
