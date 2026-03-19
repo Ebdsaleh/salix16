@@ -53,17 +53,20 @@ KEY_STATE_UP    EQU 0
 KEY_STATE_DOWN  EQU 1
 
 ; --- Salix16 Keyboard Signal Spec ---
-KeySignal STRUC
-    ; The Manifest: Allows 16-bit PUSH/POP or MOV of the first two fields
-    Manifest    DB 6 DUP(0) ; 6 bytes, holds all attributes, useful for validation and storing.
-    ; We use ORG to "reset" the pointer to the start of the manifest
-    ORG 0       
-
-    ; Individual Attributes
-    Scan_code   DB 0        ; Physical ID (Offset 0 in Manifest)
-    State       DB 0        ; Press/Release (Offset 1 in Manifest)
-    Char_Lo     DB 0        ; Normal ASCII
-    Char_Hi     DB 0        ; Shifted ASCII
-    Is_Modifier DB 0        ; 1 = Modifier, 0 = Content
-    Padding     DB 0        ; Pads to 6 bytes (3 Words) for CPU alignment
-KeySignal ENDS
+Key_Signal STRUC
+    UNION
+        ; The Manifest: Allows 16-bit PUSH/POP or MOV 
+        Manifest    DW 4 DUP(0) ; 8 bytes total, 4 words. Holds all attributes, useful for validation and storing.
+        STRUC
+            ; Individual Attributes
+            Scan_code   DB 0        ; Physical ID (Offset 0 in Manifest)
+            State       DB 0        ; Press/Release (Offset 1 in Manifest)
+            Char_Lo     DB 0        ; Normal ASCII
+            Char_Hi     DB 0        ; Shifted ASCII
+            Is_Extended DB 0        ; ; 1 = Extended, 0 = alternate (7, instead of home when numlock is active)
+            Is_Modifier DB 0        ; 1 = Modifier, 0 = Content
+            KB_State    DB 0        ; Shows the state of the keyboard's IBM grey keys and ,NUM, CAPS, INS, Ctrl, Alt    
+            Free_Byte   DB 0        ; Essentially padding, but can be used for anything.
+        ENDS
+    ENDS    
+Key_Signal ENDS

@@ -1,6 +1,7 @@
 ; INCLUDE\KEYS.INC
 ; --- KEYS.INC ---
 ; --- KEYBOARD SCANCODE VALUES ---
+; --- NOTE: FOR 101 Key- Keyboards, 386, 486 systems and up. 
 ; --- TOP ROW ---
 KEYS_ESC        EQU 01H
 KEY_F1          EQU 3BH
@@ -13,8 +14,8 @@ KEY_F7          EQU 41H
 KEY_F8          EQU 42H
 KEY_F9          EQU 43H
 KEY_F10         EQU 44H
-KEY_F11         EQU 45H
-KEY_F12         EQU 46H
+KEY_F11         EQU 57H     ; F11 was added later at 57h
+KEY_F12         EQU 58H     ; F12 was added later at 58h
 ; --- NUMBERS ---
 KEY_1           EQU 02H
 KEY_2           EQU 03H
